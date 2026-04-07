@@ -31,10 +31,12 @@ interface HackathonCardProps {
     is_verified?: boolean;
     website_url: string;
   };
+  isSaved?: boolean;
+  onSave?: (id: string) => void;
   className?: string;
 }
 
-export default function HackathonCard({ hackathon, className }: HackathonCardProps) {
+export default function HackathonCard({ hackathon, isSaved, onSave, className }: HackathonCardProps) {
   return (
     <Card className={cn(
       "bg-[#13131a] border-white/10 overflow-hidden group transition-all duration-300 hover:border-white/20 shadow-xl",
@@ -57,8 +59,16 @@ export default function HackathonCard({ hackathon, className }: HackathonCardPro
           </div>
           <p className="text-sm text-[#6b7280] font-medium truncate">by {hackathon.organizer}</p>
         </div>
-        <button className="h-9 w-9 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-[#6b7280] hover:text-[#6c47ff] hover:bg-[#6c47ff]/10 hover:border-[#6c47ff]/30 transition-all">
-          <Bookmark className="h-4 w-4" />
+        <button 
+          onClick={() => onSave?.(hackathon.id)}
+          className={cn(
+            "h-9 w-9 border rounded-xl flex items-center justify-center transition-all",
+            isSaved 
+              ? "bg-yellow-500/10 border-yellow-500/40 text-yellow-500" 
+              : "bg-white/5 border-white/10 text-[#6b7280] hover:text-[#6c47ff] hover:bg-[#6c47ff]/10 hover:border-[#6c47ff]/30"
+          )}
+        >
+          <Bookmark className={cn("h-4 w-4", isSaved && "fill-current")} />
         </button>
       </CardHeader>
 
@@ -97,14 +107,24 @@ export default function HackathonCard({ hackathon, className }: HackathonCardPro
       </CardContent>
 
       <CardFooter className="p-6 pt-0 flex gap-3 border-t border-white/5 pt-4">
-        <Button variant="ghost" className="flex-1 h-10 text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all">
+        <Button 
+          variant="ghost" 
+          className="flex-1 h-10 text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all"
+        >
           View Teams
           <Users className="h-3.5 w-3.5 ml-2" />
         </Button>
-        <Button className="flex-1 h-10 text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
-          Apply Now
-          <ExternalLink className="h-3.5 w-3.5 ml-2" />
-        </Button>
+        <a 
+          href={hackathon.website_url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex-1"
+        >
+          <Button className="w-full h-10 text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
+            Apply Now
+            <ExternalLink className="h-3.5 w-3.5 ml-2" />
+          </Button>
+        </a>
       </CardFooter>
     </Card>
   );

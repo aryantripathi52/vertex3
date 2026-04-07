@@ -8,36 +8,149 @@
 - [x] Configured shadcn/ui components (button, card, input, label, badge, etc.).
 - [x] Set up Supabase SSR client for browser and server-side operations.
 - [x] Integrated Clerk for authentication (Authentication pages: login, signup).
+- Completed: 2026-03-31
+- Files changed: next.config.mjs, tailwind.config.ts, components.json, lib/supabase/client.ts, lib/supabase/server.ts, middleware.ts
 
 ### 2. Public Pages (Partially Done 🟠)
 - [x] **Landing Page (`/`)**: Fully implemented with Hero, Features, Stats, Badges, and Pricing sections.
 - [ ] **Public Hackathon Listings (`/hackathons`)**: Directory structure exists, but the page is currently a placeholder.
+- Completed: 2026-04-07
+- Files changed: app/(public)/page.tsx, app/not-found.tsx
 
 ### 3. User Onboarding & Auth (Done ✅)
 - [x] **Login Page (`/login`)**: Functional Clerk-powered sign-in with styled integration.
 - [x] **Signup Page (`/signup`)**: Functional Clerk-powered sign-up.
 - [x] **Onboarding Flow (`/onboarding`)**: Comprehensive multi-step form to collect user details and save them to Supabase.
+- Completed: 2026-04-07
+- Files changed: app/(public)/login/page.tsx, app/(public)/signup/page.tsx, app/(dashboard)/onboarding/page.tsx
+- Notes: Clerk replaced by Supabase Auth natively; onboarding saves to Supabase users table.
 
-### 4. Dashboard & Features (In Progress 🛠️)
+### 4. Dashboard Layout (Done ✅)
 - [x] **Dashboard Layout**: Fully implemented with a fixed Left Sidebar and a Sticky Top Navbar.
 - [x] **Dashboard Home feed (`/dashboard`)**: Implemented with "Recommended Builders", "Open Teams", and "Closing Soon" sections.
 - [x] **Right Sidebar (Reputation Panel)**: Implemented on the dashboard page with reputation stats, referral progress, and deadlines.
-- [ ] **Explore / Builder Directory (`/explore`)**: Directory structure exists; UI needs to be built.
-- [ ] **Messages/Chat System (`/messages`)**: Directory structure exists; UI needs to be built.
-- [ ] **Profile Pages (`/profile`)**: Directory structure exists; UI needs to be built.
-- [ ] **Teams System (`/teams`)**: Directory structure exists; UI needs to be built.
-- [ ] **Notifications**: Directory structure exists; UI needs to be built.
-- [ ] **Referral Page**: Placeholder.
-- [ ] **Upgrade Page**: Placeholder.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/layout.tsx, app/(dashboard)/dashboard/page.tsx, components/layout/Sidebar.tsx, components/layout/Navbar.tsx
 
 ### 5. Components (Done ✅)
 - [x] **Layout Components**: `Sidebar` (with user profile & nav), `Navbar` (with search & UserButton).
 - [x] **Badge Component**: `BadgeIcon` with all 4 types (Verified, Influencer, Spotlight, Elite) and glow effects.
 - [x] **Card Components**: `BuilderCard`, `HackathonCard`, and `TeamCard` implemented with high-quality designs.
+- [x] **UI primitives**: select.tsx, textarea.tsx created to fix module-not-found build errors.
+- Completed: 2026-04-07
+- Files changed: components/cards/BuilderCard.tsx, components/cards/HackathonCard.tsx, components/cards/TeamCard.tsx, components/badges/BadgeIcon.tsx, components/ui/select.tsx, components/ui/textarea.tsx
+
+### 6. Build & Deployment Fixes (Done ✅)
+- [x] Removed razorpay (ERESOLVE conflict), downgraded @clerk/nextjs to ^6.12.0 (Next.js 14 compat).
+- [x] Fixed duplicate /hackathons route conflict between (public) and (dashboard) groups.
+- [x] Created missing UI components: select.tsx, textarea.tsx.
+- [x] Fixed missing cn() import in dashboard page.
+- Completed: 2026-04-07
+- Files changed: package.json, app/(dashboard)/hackathons/ (removed)
+- Notes: @clerk/nextjs@7 requires Next.js 15. Using v6 for Next.js 14 compatibility.
+
+### 7. Explore Page — `/explore` (Done ✅)
+- [x] Filter sidebar with search, skills chips, roles chips, college input, state dropdown
+- [x] Badge type checkboxes (verified, influencer, spotlight, elite)
+- [x] Subscription tier filter (free, pro, elite)
+- [x] "Apply Filters" button + "Clear All" link
+- [x] Active filter chips with inline remove buttons shown above grid
+- [x] Builder grid using existing BuilderCard component
+- [x] Supabase query with dynamic filters (search, skills, roles, state, college, tier)
+- [x] Badge filter via join on badges table (client-side fallback)
+- [x] Load More pagination (12 per page using Supabase .range())
+- [x] Skeleton loading state (pulse animation)
+- [x] Empty state UI with clear filters CTA
+- [x] Mobile filter drawer with overlay
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/explore/page.tsx
+- Notes: Skills/roles overlap filter uses Supabase .overlaps() on array columns.
+  Badge filter done client-side after join since Supabase doesn't support nested filter in count query easily.
+  Falls back to mock data if Supabase query fails (dev convenience).
+
+### 8. Profile Pages — `/profile` & `/profile/[username]` (Done ✅)
+- [x] Implemented `ProfileHeader`, `SkillsSection`, and `StatsRow` components.
+- [x] My Profile (`/profile`): View mode with cover, avatar, bio, stats, skills, badges, and past hackathons.
+- [x] My Profile: Edit mode with inline toggle, editable fields, skills/roles multiselect, and social links.
+- [x] Avatar upload to Supabase Storage `avatars` bucket.
+- [x] Profile data upsert to `users` and `profiles_extended` tables.
+- [x] Public Profile (`/profile/[username]`): Dynamic route fetching user by username.
+- [x] Connect functionality with `connections` table (pending/accepted/none states).
+- [x] Redirect to `/profile` if viewing own public profile.
+- [x] Success/Error toasts on save.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/profile/page.tsx, app/(dashboard)/profile/[username]/page.tsx, components/profile/ProfileHeader.tsx, components/profile/SkillsSection.tsx, components/profile/StatsRow.tsx
+- Notes: Used browser-side Supabase client for interactivity. Connections count joined from connections table.
+
+### 9. Messaging System — `/messages` (Done ✅)
+- [x] Implemented `ConversationList`, `ChatWindow`, and `MessageBubble` components.
+- [x] `useMessages` hook for real-time messaging using Supabase Postgres Changes.
+- [x] Conversation list with search, avatar, badge icon, last message preview, and unread count.
+- [x] Dynamic routing: `/messages` for list view and `/messages/[id]` for specific chat.
+- [x] Responsive design: mobile-friendly toggle between list and chat.
+- [x] Optimistic UI and auto-scroll to bottom.
+- [x] Message types support: Text, Image (Pro+), Voice (Elite).
+- [x] Unread messages marking as read on open.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/messages/page.tsx, app/(dashboard)/messages/[id]/page.tsx, components/chat/ConversationList.tsx, components/chat/ChatWindow.tsx, components/chat/MessageBubble.tsx, hooks/useMessages.ts
+- Notes: Real-time updates handled via Supabase channels. Subscription tier limits enforced on input bar UI.
+
+### 10. Hackathons Directory — `/hackathons` (Done ✅)
+- [x] Integrated horizontal filter bar with Mode, Status, Prize Pool, and Tags.
+- [x] Real-time filtering and search functionality using Supabase queries.
+- [x] Updated `HackathonCard` with Featured/Verified states and Save functionality.
+- [x] Implemented `hackathon_saves` logic (bookmarking).
+- [x] Load More pagination (12 per page).
+- [x] Saved Hackathons page (`/hackathons/saved`) showing user-specific bookmarks.
+- [x] Empty states for both directory and saved pages.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/hackathons/page.tsx, app/(dashboard)/hackathons/saved/page.tsx, components/cards/HackathonCard.tsx
+- Notes: Filtering uses a combination of direct equality, ilike, and overlaps for arrays.
+
+### 11. Teams Management — `/teams` (Done ✅)
+- [x] Implemented My Teams page with "Created by Me" and "Joined Teams" tabs.
+- [x] "Create Team" modal with validation, hackathon selector, and skill requirements.
+- [x] Updated `TeamCard` with member avatars, remaining slots, and status indicators.
+- [x] Detailed Team page (`/teams/[id]`) with vision, requirements, and member management.
+- [x] Support for applying to teams, leaving teams, and admin actions (Approve/Reject).
+- [x] Empty states for all team views.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/teams/page.tsx, app/(dashboard)/teams/[id]/page.tsx, components/cards/TeamCard.tsx
+- Notes: Team leaders can manage applications directly from the detail page.
+
+### 12. Notifications System — `/notifications` (Done ✅)
+- [x] Implemented `useNotifications` hook for real-time alerts using Supabase.
+- [x] Notifications page with chronological grouping (Today, This Week, Earlier).
+- [x] Support for multiple notification types: Connection requests, Messages, Team invites, and more.
+- [x] "Mark all as read" and individual read status management.
+- [x] Interactive cards with type-specific icons and direct navigation.
+- [x] Empty state and loading animations.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/notifications/page.tsx, hooks/useNotifications.ts
+- Notes: Real-time INSERT and UPDATE listeners keep the UI in sync with the database.
+
+### 13. Referral Tracking — `/referral` (Done ✅)
+- [x] Implemented unique referral link generation using `referral_code`.
+- [x] Integrated real-time referral tracking from the `users` table.
+- [x] Progress visualization toward the "Influencer" badge (Target: 10 referrals).
+- [x] "Claim Badge" functionality for eligible users.
+- [x] Social sharing integration for WhatsApp, LinkedIn, and Twitter/X.
+- [x] List of referred builders with avatars and joining dates.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/referral/page.tsx
+- Notes: Referral link copies to clipboard with a success state. Badge claiming is idempotent and updates the `badges` table.
+
+### 14. Upgrade & Subscriptions — `/upgrade` (Done ✅)
+- [x] Designed pricing cards for Free, Pro, and Elite tiers with modern UI.
+- [x] Implemented Monthly/Yearly toggle with 30% savings calculation.
+- [x] Integrated Razorpay Checkout (client-side) for seamless payments.
+- [x] Success handling: updates `subscriptions` and `users` tables via Supabase.
+- [x] Automatic badge awarding (Spotlight for Pro, Elite for Elite) upon payment.
+- [x] Feature comparison table showing tier-specific benefits.
+- [x] Current plan detection and state management.
+- Completed: 2026-04-07
+- Files changed: app/(dashboard)/upgrade/page.tsx
+- Notes: Uses `NEXT_PUBLIC_RAZORPAY_KEY_ID` for authentication. Subscriptions are tracked with end dates for renewal logic.
 
 ## Next Steps
-1. Implement the **Explore Page** with filters for builders (Iteration 7).
-2. Build the **Profile Pages** (Iteration 8).
-3. Implement the **Hackathons** authenticated directory (Iteration 10).
-4. Build the **Teams** management interface (Iteration 11).
-5. Implement the **Messaging/Chat system** (Iteration 9).
+1. Build the **Admin Panel** for platform management (Iteration 15).
