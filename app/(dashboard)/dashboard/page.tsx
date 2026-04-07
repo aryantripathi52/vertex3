@@ -16,9 +16,9 @@ import {
   Plus
 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Progress } from "@radix-ui/react-progress"; // Need to check if progress is available
 import BuilderCard from "@/components/cards/BuilderCard";
 import HackathonCard from "@/components/cards/HackathonCard";
 import TeamCard from "@/components/cards/TeamCard";
