@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   Users, 
   Search, 
@@ -36,8 +37,12 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" className="text-[#f0f0ff] hover:bg-white/5">Log In</Button>
-            <Button className="bg-[#6c47ff] hover:bg-[#6c47ff]/90 text-white border-none">Get Started</Button>
+            <Link href="/login">
+              <Button variant="ghost" className="text-[#f0f0ff] hover:bg-white/5">Log In</Button>
+            </Link>
+            <Link href="/signup">
+              <Button className="bg-[#6c47ff] hover:bg-[#6c47ff]/90 text-white border-none">Get Started</Button>
+            </Link>
           </div>
         </div>
       </nav>
@@ -60,12 +65,16 @@ export default function LandingPage() {
             India&apos;s largest builder network — connect with developers, designers, and innovators across 500+ colleges.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="h-12 px-8 bg-[#6c47ff] hover:bg-[#6c47ff]/90 text-white font-semibold">
-              Find Teammates <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 border-white/10 bg-transparent text-[#f0f0ff] hover:bg-white/5">
-              Browse Hackathons
-            </Button>
+            <Link href="/signup">
+              <Button size="lg" className="h-12 px-8 bg-[#6c47ff] hover:bg-[#6c47ff]/90 text-white font-semibold flex items-center">
+                Find Teammates <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link href="/explore">
+              <Button size="lg" variant="outline" className="h-12 px-8 border-white/10 bg-transparent text-[#f0f0ff] hover:bg-white/5">
+                Browse Hackathons
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
