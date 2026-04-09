@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   Users, 
@@ -43,10 +44,8 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       {/* Branding & Mobile Close */}
       <div className="flex items-center justify-between mb-10 px-2 mt-2">
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <div className="h-2 w-2 rounded-full bg-white"></div>
-            <div className="h-2 w-2 rounded-full bg-white"></div>
-            <div className="h-2 w-2 rounded-full bg-white"></div>
+          <div className="flex items-center justify-center bg-transparent">
+            <Image src="/logo.png" alt="Vertex3" width={24} height={24} className="object-contain filter invert opacity-90" />
           </div>
           <span className="text-xl font-bold tracking-tight text-[#f0f0ff]">Vertex3</span>
         </div>

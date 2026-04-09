@@ -1,5 +1,6 @@
 import { SignIn } from "@clerk/nextjs";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
@@ -7,10 +8,8 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <div className="flex items-center gap-1">
-              <div className="h-2 w-2 rounded-full bg-white"></div>
-              <div className="h-2 w-2 rounded-full bg-white"></div>
-              <div className="h-2 w-2 rounded-full bg-white"></div>
+            <div className="flex items-center justify-center bg-transparent">
+              <Image src="/logo.png" alt="Vertex3" width={32} height={32} className="object-contain filter invert opacity-90" />
             </div>
             <span className="text-2xl font-bold tracking-tight text-[#f0f0ff]">Vertex3</span>
           </div>

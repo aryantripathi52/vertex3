@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { 
   Users, 
   Search, 
@@ -22,10 +23,8 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0a0a0f]/80 backdrop-blur-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <div className="h-2 w-2 rounded-full bg-white"></div>
-              <div className="h-2 w-2 rounded-full bg-white"></div>
-              <div className="h-2 w-2 rounded-full bg-white"></div>
+            <div className="flex items-center justify-center bg-transparent">
+              <Image src="/logo.png" alt="Vertex3" width={24} height={24} className="object-contain filter invert opacity-90" />
             </div>
             <span className="text-xl font-bold tracking-tight">Vertex3</span>
           </div>
@@ -239,10 +238,8 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
             <div className="flex flex-col items-center md:items-start">
               <div className="flex items-center gap-2 mb-2">
-                <div className="flex items-center gap-1">
-                  <div className="h-2 w-2 rounded-full bg-white"></div>
-                  <div className="h-2 w-2 rounded-full bg-white"></div>
-                  <div className="h-2 w-2 rounded-full bg-white"></div>
+                <div className="flex items-center justify-center bg-transparent">
+                  <Image src="/logo.png" alt="Vertex3" width={24} height={24} className="object-contain filter invert opacity-90" />
                 </div>
                 <span className="text-xl font-bold tracking-tight">Vertex3</span>
               </div>
