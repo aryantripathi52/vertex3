@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { 
-  Loader2, Save, X, Edit3, Share2, Github, Linkedin, 
-  Twitter, Globe, Trophy, ExternalLink, Mail, Plus
+  Loader2, Save, X, Edit3, Share2, Code, Rocket,
+  Globe, Trophy, ExternalLink, Mail, Plus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import { createClient } from "@/lib/supabase/client";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import SkillsSection from "@/components/profile/SkillsSection";
 import StatsRow from "@/components/profile/StatsRow";
+import BadgeIcon from "@/components/badges/BadgeIcon";
 import { cn } from "@/lib/utils";
 
 export default function MyProfilePage() {
@@ -368,7 +369,7 @@ export default function MyProfilePage() {
                   {extended.linkedin_url && (
                     <a href={extended.linkedin_url} target="_blank" className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors group">
                       <div className="flex items-center gap-3">
-                        <Linkedin className="h-4 w-4 text-[#0077b5]" />
+                        <Globe className="h-4 w-4 text-[#0077b5]" />
                         <span className="text-sm text-[#f0f0ff]">LinkedIn</span>
                       </div>
                       <ExternalLink className="h-4 w-4 text-[#6b7280] opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -401,7 +402,7 @@ export default function MyProfilePage() {
               {badges.length > 0 ? (
                 badges.map((badge, i) => (
                   <div key={i} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl border border-white/5">
-                    <BadgeIcon type={badge.badge_type} size="md" />
+                    <BadgeIcon type={badge.badge_type} className="p-2" />
                     <div>
                       <p className="text-sm font-semibold text-[#f0f0ff] capitalize">{badge.badge_type}</p>
                       <p className="text-[10px] text-[#6b7280] uppercase tracking-wider">
@@ -423,30 +424,5 @@ export default function MyProfilePage() {
         </div>
       </div>
     </div>
-  );
-}
-
-function Rocket(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.71.71-2.5.71-2.5s-1.79 0-2.5-.71Z" />
-      <path d="M12 10 9 13" />
-      <path d="M7 15 4 18" />
-      <path d="M13 13.5c2 1 3.5 3.5 3.5 3.5s-2.5 1.5-3.5 3.5c-1 2-1.5 4.5-1.5 4.5s-1.5-2.5-3.5-3.5c-2-1-4.5-1.5-4.5-1.5s2.5-1.5 3.5-3.5c1-2 1.5-4.5 1.5-4.5s1.5 2.5 3.5 3.5Z" />
-      <path d="m11.5 7.5 3-3" />
-      <path d="m14 10 3-3" />
-      <path d="M2 21s.5-3 2-4.5L16.5 4a1 1 0 0 1 1.4 0l2.1 2.1a1 1 0 0 1 0 1.4L7.5 20C6 21.5 3 22 3 22Z" />
-    </svg>
   );
 }

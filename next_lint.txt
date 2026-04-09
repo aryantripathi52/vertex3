@@ -1,0 +1,226 @@
+
+./app/(admin)/admin/hackathons/page.tsx
+7:3  Error: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+7:16  Error: 'MoreVertical' is defined but never used.  @typescript-eslint/no-unused-vars
+8:25  Error: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+16:31  Error: 'DialogFooter' is defined but never used.  @typescript-eslint/no-unused-vars
+23:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+41:6  Warning: React Hook useEffect has a missing dependency: 'fetchHackathons'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./app/(admin)/admin/page.tsx
+7:17  Error: 'ArrowDownRight' is defined but never used.  @typescript-eslint/no-unused-vars
+54:65  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+168:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(admin)/admin/users/page.tsx
+9:32  Error: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Error: 'Card' is defined but never used.  @typescript-eslint/no-unused-vars
+15:16  Error: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
+23:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+29:6  Warning: React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+204:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(admin)/layout.tsx
+8:3  Error: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/(dashboard)/dashboard/page.tsx
+6:3  Error: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Error: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Error: 'MessageSquare' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Error: 'Flame' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Error: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Error: 'Crown' is defined but never used.  @typescript-eslint/no-unused-vars
+21:16  Error: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
+21:29  Error: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+21:41  Error: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+21:52  Error: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+118:61  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+118:68  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/(dashboard)/explore/page.tsx
+404:58  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(dashboard)/hackathons/page.tsx
+5:11  Error: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+5:19  Error: 'SlidersHorizontal' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Error: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Error: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+6:18  Error: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+6:37  Error: 'Bookmark' is defined but never used.  @typescript-eslint/no-unused-vars
+29:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:6  Warning: React Hook useEffect has missing dependencies: 'fetchHackathons' and 'fetchSavedIds'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+85:19  Error: 'error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/(dashboard)/hackathons/saved/page.tsx
+4:10  Error: 'Trophy' is defined but never used.  @typescript-eslint/no-unused-vars
+4:18  Error: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+13:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:10  Error: 'savedIds' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+18:6  Warning: React Hook useEffect has a missing dependency: 'fetchSavedHackathons'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+26:39  Error: 'savedError' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+35:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+37:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:79  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+94:67  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/(dashboard)/messages/page.tsx
+13:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:70  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+41:66  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:62  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+60:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(dashboard)/messages/[id]/page.tsx
+8:10  Error: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+16:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+17:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:70  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:66  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:62  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+63:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(dashboard)/notifications/page.tsx
+7:3  Error: 'Trophy' is defined but never used.  @typescript-eslint/no-unused-vars
+8:24  Error: 'Trash2' is defined but never used.  @typescript-eslint/no-unused-vars
+33:34  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+47:45  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+142:63  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+143:96  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/(dashboard)/profile/page.tsx
+5:28  Error: 'Share2' is defined but never used.  @typescript-eslint/no-unused-vars
+5:36  Error: 'Code' is defined but never used.  @typescript-eslint/no-unused-vars
+6:32  Error: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+6:38  Error: 'Plus' is defined but never used.  @typescript-eslint/no-unused-vars
+10:16  Error: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
+23:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+25:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+128:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+162:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(dashboard)/profile/[username]/page.tsx
+7:39  Error: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+24:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+25:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+26:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+91:52  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+148:63  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+148:84  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+340:74  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/(dashboard)/referral/page.tsx
+6:37  Error: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+21:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+181:15  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+181:35  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+181:85  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./app/(dashboard)/teams/page.tsx
+5:16  Error: 'Trophy' is defined but never used.  @typescript-eslint/no-unused-vars
+5:33  Error: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Error: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+6:17  Error: 'Lightbulb' is defined but never used.  @typescript-eslint/no-unused-vars
+6:36  Error: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Error: 'Card' is defined but never used.  @typescript-eslint/no-unused-vars
+35:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+36:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+37:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+54:6  Warning: React Hook useEffect has missing dependencies: 'fetchHackathons' and 'fetchTeams'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+95:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+98:45  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+98:86  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+102:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+353:76  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/(dashboard)/teams/[id]/page.tsx
+23:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+25:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+26:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:6  Warning: React Hook useEffect has a missing dependency: 'fetchTeamData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./app/(dashboard)/upgrade/page.tsx
+5:41  Error: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+6:15  Error: 'ToggleLeft' is defined but never used.  @typescript-eslint/no-unused-vars
+6:27  Error: 'ToggleRight' is defined but never used.  @typescript-eslint/no-unused-vars
+6:40  Error: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+16:15  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+66:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+86:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/(public)/page.tsx
+3:3  Error: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/not-found.tsx
+11:28  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+11:49  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/cards/BuilderCard.tsx
+4:8  Error: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Error: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+6:58  Error: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/cards/HackathonCard.tsx
+7:3  Error: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Error: 'Tag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Error: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/cards/TeamCard.tsx
+5:3  Error: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Error: 'Lightbulb' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Error: 'UserPlus' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Error: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/chat/ChatWindow.tsx
+6:51  Error: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Error: 'Input' is defined but never used.  @typescript-eslint/no-unused-vars
+17:17  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:16  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/chat/ConversationList.tsx
+12:18  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/chat/MessageBubble.tsx
+9:12  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+28:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/layout/Sidebar.tsx
+16:3  Error: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/profile/ProfileHeader.tsx
+4:63  Error: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Error: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+12:12  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:11  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:9  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+28:3  Error: 'isOwnProfile' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/select.tsx
+6:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./components/ui/textarea.tsx
+6:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./lib/types/database.types.ts
+147:12  Error: The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.  @typescript-eslint/no-empty-object-type
+148:16  Error: The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.  @typescript-eslint/no-empty-object-type
+149:12  Error: The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.  @typescript-eslint/no-empty-object-type
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
