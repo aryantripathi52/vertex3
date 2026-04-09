@@ -13,7 +13,8 @@ import {
   Zap, 
   LayoutDashboard,
   LogOut,
-  ChevronRight
+  ChevronRight,
+  X
 } from "lucide-react";
 import { useUser, SignOutButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
@@ -31,22 +32,30 @@ const NAV_ITEMS = [
   { label: "Upgrade", href: "/upgrade", icon: Zap },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const { user } = useUser();
 
   if (!user) return null;
 
   return (
-    <aside className="w-64 h-screen bg-[#0a0a0f] border-r border-white/10 flex flex-col p-4 fixed left-0 top-0 z-50">
-      {/* Branding */}
-      <div className="flex items-center gap-2 mb-10 px-2 mt-2">
-        <div className="flex items-center gap-1">
-          <div className="h-2 w-2 rounded-full bg-white"></div>
-          <div className="h-2 w-2 rounded-full bg-white"></div>
-          <div className="h-2 w-2 rounded-full bg-white"></div>
+    <aside className="w-64 h-screen bg-[#0a0a0f] border-r border-white/10 flex flex-col p-4 fixed left-0 top-0 z-50 lg:static">
+      {/* Branding & Mobile Close */}
+      <div className="flex items-center justify-between mb-10 px-2 mt-2">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <div className="h-2 w-2 rounded-full bg-white"></div>
+            <div className="h-2 w-2 rounded-full bg-white"></div>
+            <div className="h-2 w-2 rounded-full bg-white"></div>
+          </div>
+          <span className="text-xl font-bold tracking-tight text-[#f0f0ff]">Vertex3</span>
         </div>
-        <span className="text-xl font-bold tracking-tight text-[#f0f0ff]">Vertex3</span>
+        <button 
+          onClick={onClose}
+          className="lg:hidden p-2 rounded-lg bg-white/5 text-[#6b7280] hover:text-[#f0f0ff]"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
 
       {/* User Info & Badge */}
@@ -74,6 +83,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
                 isActive 

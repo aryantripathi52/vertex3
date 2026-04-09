@@ -152,5 +152,15 @@
 - Files changed: app/(dashboard)/upgrade/page.tsx
 - Notes: Uses `NEXT_PUBLIC_RAZORPAY_KEY_ID` for authentication. Subscriptions are tracked with end dates for renewal logic.
 
+### 15. Admin Panel — `/admin` (Done ✅)
+- [x] **Admin Dashboard**: Real-time stats cards with user growth tracking (Recharts).
+- [x] **Hackathons Management**: Interface to create, edit, and feature hackathons.
+- [x] **User Moderation**: Directory view with subscription tracking, plan badges, and connection stats.
+- [x] **Responsive Layout**: Sidebar with mobile-toggle and overlay for administrative control.
+- Completed: 2026-04-09
+- Files changed: app/(admin)/page.tsx, app/(admin)/hackathons/page.tsx, app/(admin)/users/page.tsx, components/layout/Sidebar.tsx, components/layout/Navbar.tsx
+
 ## Next Steps
-1. Build the **Admin Panel** for platform management (Iteration 15).
+1. Implement **Real-time Chat** back-end triggers in Supabase (Postgres Functions).
+2. Integrate **Resend Email Templates** for team invitations and badge awards.
+3. Optimize **Vercel Remote Patterns** for third-party images if using `next/image`.
