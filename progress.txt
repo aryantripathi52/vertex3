@@ -101,6 +101,7 @@ Checkpoints:
 [ISSUE 2 - Profile] ✅ Profile save API route created
 [ISSUE 2 - Profile] ✅ Avatar upload API route created  
 [ISSUE 2 - Profile] ✅ All fields made optional
+[ISSUE 2 - Profile] ✅ BadgeIcon null guard for unknown types added
 
 =============================================================
 ## ISSUE 3: CONNECT & DMs NOT WORKING
