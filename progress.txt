@@ -98,6 +98,9 @@ Checkpoints:
 [ISSUE 2 - Profile] ✅ Profile page route found
 [ISSUE 2 - Profile] ✅ Fix clerk_id to supabase internal id sequence fetch logic
 [ISSUE 2 - Profile] ✅ User data fetches correctly and displays
+[ISSUE 2 - Profile] ✅ Profile save API route created
+[ISSUE 2 - Profile] ✅ Avatar upload API route created  
+[ISSUE 2 - Profile] ✅ All fields made optional
 
 =============================================================
 ## ISSUE 3: CONNECT & DMs NOT WORKING

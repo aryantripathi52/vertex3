@@ -98,35 +98,16 @@ export default function MyProfilePage() {
     setMessage(null);
 
     try {
-      const { error: userError } = await supabase
-        .from("users")
-        .update({
-          full_name: form.full_name,
-          username: form.username,
-          bio: form.bio,
-          college: form.college,
-          city: form.city,
-          state: form.state,
-          github_url: form.github_url,
-          skills: form.skills,
-          roles: form.roles,
-        })
-        .eq("id", profile.id);
+      const response = await fetch('/api/profile/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clerk_id: clerkUser.id, ...form })
+      });
 
-      if (userError) throw userError;
-
-      const { error: extendedError } = await supabase
-        .from("profiles_extended")
-        .upsert({
-          user_id: profile.id,
-          leetcode_username: form.leetcode_username,
-          codeforces_username: form.codeforces_username,
-          linkedin_url: form.linkedin_url,
-          twitter_url: form.twitter_url,
-          portfolio_url: form.portfolio_url,
-        });
-
-      if (extendedError) throw extendedError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update profile');
+      }
 
       setProfile({ ...profile, ...form });
       setExtended({ ...extended, ...form });
@@ -147,23 +128,25 @@ export default function MyProfilePage() {
 
     try {
       setSaving(true);
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${profile.id}-${Math.random()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
+      
+      const formData = new FormData();
+      formData.append('clerk_id', clerkUser.id);
+      formData.append('file', file);
 
-      const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(filePath, file);
+      const response = await fetch('/api/profile/avatar', {
+        method: 'POST',
+        body: formData,
+      });
 
-      if (uploadError) throw uploadError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to upload avatar');
+      }
 
-      const { data: { publicUrl } } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(filePath);
+      const { publicUrl } = await response.json();
 
       setForm({ ...form, avatar_url: publicUrl });
       if (!editing) {
-        await supabase.from("users").update({ avatar_url: publicUrl }).eq("id", profile.id);
         setProfile({ ...profile, avatar_url: publicUrl });
       }
     } catch (error: any) {
