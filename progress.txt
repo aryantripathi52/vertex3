@@ -95,6 +95,9 @@ Tasks:
 
 Checkpoints:
 # Agent appends here
+[ISSUE 2 - Profile] ✅ Profile page route found
+[ISSUE 2 - Profile] ✅ Fix clerk_id to supabase internal id sequence fetch logic
+[ISSUE 2 - Profile] ✅ User data fetches correctly and displays
 
 =============================================================
 ## ISSUE 3: CONNECT & DMs NOT WORKING
@@ -114,6 +117,9 @@ Tasks:
 
 Checkpoints:
 # Agent appends here
+[ISSUE 3 - DMs] ✅ Connect button working in BuilderCard
+[ISSUE 3 - DMs] ✅ Fix DM message fetching and send logic for correct DB User
+[ISSUE 3 - DMs] ✅ Chat history tier logic implemented via cleanup cron route
 
 =============================================================
 ## COMPLETED ISSUES
