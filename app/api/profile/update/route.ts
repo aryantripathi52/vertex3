@@ -4,10 +4,10 @@ import { createClient } from '@supabase/supabase-js';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { 
-      clerk_id, full_name, username, bio, college, city, state, github_url, 
-      skills, roles, leetcode_username, codeforces_username, linkedin_url, 
-      twitter_url, portfolio_url 
+    const {
+      clerk_id, full_name, username, bio, college, city, state, github_url,
+      skills, roles, leetcode_username, codeforces_username, linkedin_url,
+      twitter_url, portfolio_url
     } = body;
 
     if (!clerk_id) {
@@ -62,7 +62,10 @@ export async function POST(req: Request) {
         linkedin_url: linkedin_url ?? null,
         twitter_url: twitter_url ?? null,
         portfolio_url: portfolio_url ?? null,
-      });
+      },
+        {
+          onConflict: "user_id"  // ← add this
+        });
 
     if (extendedError) {
       throw extendedError;
