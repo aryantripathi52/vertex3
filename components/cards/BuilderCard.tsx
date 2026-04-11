@@ -74,12 +74,12 @@ export default function BuilderCard({ user, className }: BuilderCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="p-5 pt-0 grid grid-cols-2 gap-3">
-        <Button variant="ghost" className="h-9 text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all">
+      <CardFooter className="p-5 pt-0 grid grid-cols-2 gap-3 sm:gap-4 flex-col sm:flex-row">
+        <Button variant="ghost" className="min-h-[44px] text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all">
           <UserPlus className="h-3.5 w-3.5 mr-2" />
           Connect
         </Button>
-        <Button className="h-9 text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
+        <Button className="min-h-[44px] text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
           <MessageSquare className="h-3.5 w-3.5 mr-2" />
           Message
         </Button>

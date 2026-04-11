@@ -51,7 +51,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         </div>
         <button 
           onClick={onClose}
-          className="lg:hidden p-2 rounded-lg bg-white/5 text-[#6b7280] hover:text-[#f0f0ff]"
+          className="lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-lg bg-white/5 text-[#6b7280] hover:text-[#f0f0ff]"
         >
           <X className="h-5 w-5" />
         </button>
@@ -105,7 +105,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       {/* Footer / Sign Out */}
       <div className="mt-auto pt-4 border-t border-white/10">
         <SignOutButton>
-          <button className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-[#ef4444] hover:bg-red-500/5 transition-colors">
+          <button className="flex items-center gap-3 px-3 py-2.5 min-h-[44px] w-full rounded-xl text-[#ef4444] hover:bg-red-500/5 transition-colors">
             <LogOut className="h-5 w-5" />
             <span className="text-sm font-medium">Log out</span>
           </button>

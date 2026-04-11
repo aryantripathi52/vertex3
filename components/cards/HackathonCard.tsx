@@ -62,7 +62,7 @@ export default function HackathonCard({ hackathon, isSaved, onSave, className }:
         <button 
           onClick={() => onSave?.(hackathon.id)}
           className={cn(
-            "h-9 w-9 border rounded-xl flex items-center justify-center transition-all",
+            "min-h-[44px] min-w-[44px] border rounded-xl flex items-center justify-center transition-all",
             isSaved 
               ? "bg-yellow-500/10 border-yellow-500/40 text-yellow-500" 
               : "bg-white/5 border-white/10 text-[#6b7280] hover:text-[#6c47ff] hover:bg-[#6c47ff]/10 hover:border-[#6c47ff]/30"
@@ -106,10 +106,10 @@ export default function HackathonCard({ hackathon, isSaved, onSave, className }:
         </div>
       </CardContent>
 
-      <CardFooter className="p-6 pt-0 flex gap-3 border-t border-white/5 pt-4">
+      <CardFooter className="p-6 pt-0 flex flex-col sm:flex-row gap-3 border-t border-white/5 mt-4 pt-4">
         <Button 
           variant="ghost" 
-          className="flex-1 h-10 text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all"
+          className="w-full sm:flex-1 min-h-[44px] text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all"
         >
           View Teams
           <Users className="h-3.5 w-3.5 ml-2" />
@@ -118,9 +118,9 @@ export default function HackathonCard({ hackathon, isSaved, onSave, className }:
           href={hackathon.website_url} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="flex-1"
+          className="w-full sm:flex-1"
         >
-          <Button className="w-full h-10 text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
+          <Button className="w-full min-h-[44px] text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
             Apply Now
             <ExternalLink className="h-3.5 w-3.5 ml-2" />
           </Button>

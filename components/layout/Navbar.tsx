@@ -20,7 +20,7 @@ export default function DashboardNavbar({ onMenuClick }: NavbarProps) {
         {/* Mobile Menu Toggle */}
         <button 
           onClick={onMenuClick}
-          className="lg:hidden p-2 -ml-2 rounded-xl text-[#6b7280] hover:text-[#f0f0ff] hover:bg-white/5 transition-colors"
+          className="lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 -ml-2 rounded-xl text-[#6b7280] hover:text-[#f0f0ff] hover:bg-white/5 transition-colors"
         >
           <Menu className="h-6 w-6" />
         </button>
@@ -37,7 +37,7 @@ export default function DashboardNavbar({ onMenuClick }: NavbarProps) {
 
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <button className="p-2 rounded-xl border border-white/10 bg-white/5 text-[#6b7280] hover:text-[#f0f0ff] transition-colors relative">
+        <button className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl border border-white/10 bg-white/5 text-[#6b7280] hover:text-[#f0f0ff] transition-colors relative">
           <Bell className="h-5 w-5" />
           <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full border border-[#0a0a0f]"></span>
         </button>
@@ -52,7 +52,7 @@ export default function DashboardNavbar({ onMenuClick }: NavbarProps) {
             afterSignOutUrl="/"
             appearance={{
               elements: {
-                userButtonAvatarBox: "h-9 w-9 border border-[#6c47ff]/20",
+                userButtonAvatarBox: "h-11 w-11 border border-[#6c47ff]/20",
               }
             }}
           />
