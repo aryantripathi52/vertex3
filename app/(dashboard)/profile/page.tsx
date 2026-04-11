@@ -205,9 +205,14 @@ export default function MyProfilePage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-12 px-4">
-      <p className="text-white">Name: {profile?.full_name || "No name"}</p>
-      <p className="text-white">Email: {profile?.email || "No email"}</p>
-      <p className="text-white">Clerk ID: {clerkUser?.id}</p>
+      <ProfileHeader
+        profile={profile}
+        badges={badges}
+        editing={editing}
+        form={form}
+        setForm={setForm}
+        onAvatarUpload={handleAvatarUpload}
+      />
     </div>
   );
 }
