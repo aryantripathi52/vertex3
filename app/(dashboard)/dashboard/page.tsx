@@ -25,83 +25,11 @@ import TeamCard from "@/components/cards/TeamCard";
 import BadgeIcon from "@/components/badges/BadgeIcon";
 
 // Mock Data
-const RECOMMENDED_BUILDERS = [
-  {
-    id: "1",
-    username: "the_aryan",
-    full_name: "Aryan Tripathi",
-    avatar_url: "https://github.com/aryantripathi52.png",
-    college: "IIT Bombay",
-    city: "Mumbai",
-    skills: ["Next.js", "Supabase", "UI/UX", "Python"],
-    badge_type: "verified" as const,
-  },
-  {
-    id: "2",
-    username: "priya_dev",
-    full_name: "Priya Sharma",
-    avatar_url: "",
-    college: "BITS Pilani",
-    city: "Hyderabad",
-    skills: ["React Native", "Firebase", "Node.js", "FastAPI"],
-    badge_type: "influencer" as const,
-  },
-  {
-    id: "3",
-    username: "sam_smith",
-    full_name: "Sam Smith",
-    avatar_url: "",
-    college: "DTU Delhi",
-    city: "Delhi",
-    skills: ["Blockchain", "Solidity", "Web3", "Smart Contracts"],
-    badge_type: "elite" as const,
-  }
-];
+const RECOMMENDED_BUILDERS: any[] = [];
 
-const OPEN_TEAMS = [
-  {
-    id: "1",
-    name: "Nexus AI",
-    idea: "Building a decentralized marketplace for AI models focused on small enterprises.",
-    hackathon_title: "Smart India Hackathon 2024",
-    members: [
-      { id: "1", full_name: "Aryan T.", avatar_url: "https://github.com/aryantripathi52.png" },
-      { id: "2", full_name: "Priya S.", avatar_url: "" }
-    ],
-    max_members: 4,
-    required_skills: ["Python", "TensorFlow", "React", "Node.js"],
-    is_open: true,
-  },
-  {
-    id: "2",
-    name: "FinFlow",
-    idea: "Unified interface for managing multi-chain DeFi investments with risk analysis.",
-    hackathon_title: "Hack India Web3",
-    members: [
-      { id: "1", full_name: "Sam S.", avatar_url: "" }
-    ],
-    max_members: 3,
-    required_skills: ["Solidity", "Rust", "Web3.js"],
-    is_open: true,
-  }
-];
+const OPEN_TEAMS: any[] = [];
 
-const CLOSING_HACKATHONS = [
-  {
-    id: "1",
-    title: "HackVerse 3.0",
-    organizer: "NITK Surathkal",
-    location: "Online",
-    mode: "Online" as const,
-    start_date: "2024-05-20",
-    end_date: "2024-05-22",
-    prize_pool: "₹2,50,000",
-    tags: ["AI", "Cloud", "SaaS"],
-    is_featured: true,
-    is_verified: true,
-    website_url: "#",
-  }
-];
+const CLOSING_HACKATHONS: any[] = [];
 
 export default function DashboardPage() {
   const { user } = useUser();

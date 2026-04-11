@@ -428,51 +428,9 @@ export default function ExplorePage() {
         setHasMore((data?.length ?? 0) === PAGE_SIZE);
       } catch (err) {
         console.error("Error fetching builders:", err);
-        // Fallback to mock data for development
-        const MOCK: Builder[] = [
-          {
-            id: "1", username: "the_aryan", full_name: "Aryan Tripathi",
-            avatar_url: "https://github.com/aryantripathi52.png",
-            college: "IIT Bombay", city: "Mumbai", state: "Maharashtra",
-            skills: ["Next.js", "Supabase", "UI/UX", "Python"], badge_type: "verified",
-          },
-          {
-            id: "2", username: "priya_dev", full_name: "Priya Sharma",
-            avatar_url: "", college: "BITS Pilani", city: "Hyderabad",
-            state: "Telangana", skills: ["React Native", "Firebase", "Node.js"], badge_type: "influencer",
-          },
-          {
-            id: "3", username: "sam_smith", full_name: "Sam Smith",
-            avatar_url: "", college: "DTU Delhi", city: "Delhi",
-            state: "Delhi", skills: ["Blockchain", "Solidity", "Web3"], badge_type: "elite",
-          },
-          {
-            id: "4", username: "aisha_ml", full_name: "Aisha Khan",
-            avatar_url: "", college: "IIT Delhi", city: "Delhi",
-            state: "Delhi", skills: ["Python", "ML/AI", "Data Science"],
-          },
-          {
-            id: "5", username: "raj_flutter", full_name: "Raj Patel",
-            avatar_url: "", college: "NIT Surat", city: "Surat",
-            state: "Gujarat", skills: ["Flutter", "Android", "Firebase"], badge_type: "spotlight",
-          },
-          {
-            id: "6", username: "nisha_design", full_name: "Nisha Reddy",
-            avatar_url: "", college: "IIIT Hyderabad", city: "Hyderabad",
-            state: "Telangana", skills: ["Figma", "UI/UX", "React"],
-          },
-        ];
-
-        const filteredMock = MOCK.filter((b) => {
-          if (f.search && !b.full_name.toLowerCase().includes(f.search.toLowerCase()) && !b.username.includes(f.search.toLowerCase())) return false;
-          if (f.skills.length > 0 && !f.skills.some((s) => b.skills.includes(s))) return false;
-          if (f.state && f.state !== "All States" && b.state !== f.state) return false;
-          if (f.badges.length > 0 && (!b.badge_type || !f.badges.includes(b.badge_type))) return false;
-          return true;
-        });
-
-        setBuilders((prev) => (append ? [...prev, ...filteredMock] : filteredMock));
-        setTotal(filteredMock.length);
+        // Fallback removed
+        setBuilders((prev) => (append ? [...prev] : []));
+        setTotal(0);
         setHasMore(false);
       } finally {
         if (append) setLoadingMore(false);
