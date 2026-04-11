@@ -9,6 +9,8 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import BadgeIcon, { BadgeType } from "@/components/badges/BadgeIcon";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
+import { createClient } from "@/lib/supabase/client";
 
 interface BuilderCardProps {
   user: {
@@ -25,6 +27,33 @@ interface BuilderCardProps {
 }
 
 export default function BuilderCard({ user, className }: BuilderCardProps) {
+  const { user: clerkUser } = useUser();
+  const supabase = createClient();
+  const [connecting, setConnecting] = React.useState(false);
+  const [connected, setConnected] = React.useState(false);
+
+  const handleConnect = async () => {
+    if (!clerkUser) return;
+    setConnecting(true);
+    try {
+      const { data: dbUser } = await supabase.from('users').select('id').eq('clerk_id', clerkUser.id).single();
+      if (!dbUser) return;
+      
+      const { error } = await supabase.from('connections').insert({
+        requester_id: dbUser.id,
+        receiver_id: user.id,
+        status: 'pending'
+      });
+      if (!error) {
+        setConnected(true);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setConnecting(false);
+    }
+  };
+
   return (
     <Card className={cn(
       "bg-[#13131a] border-white/10 overflow-hidden group hover:border-[#6c47ff]/50 transition-all duration-300 hover:-translate-y-1 shadow-lg",
@@ -75,9 +104,13 @@ export default function BuilderCard({ user, className }: BuilderCardProps) {
       </CardContent>
 
       <CardFooter className="p-5 pt-0 grid grid-cols-2 gap-3 sm:gap-4 flex-col sm:flex-row">
-        <Button variant="ghost" className="min-h-[44px] text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all">
+        <Button 
+          variant="ghost" 
+          onClick={handleConnect}
+          disabled={connecting || connected}
+          className="min-h-[44px] text-xs border border-white/10 hover:bg-white/5 hover:text-[#f0f0ff] rounded-xl font-semibold transition-all">
           <UserPlus className="h-3.5 w-3.5 mr-2" />
-          Connect
+          {connected ? "Pending" : (connecting ? "Connecting..." : "Connect")}
         </Button>
         <Button className="min-h-[44px] text-xs bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl font-semibold transition-all shadow-lg shadow-[#6c47ff]/20">
           <MessageSquare className="h-3.5 w-3.5 mr-2" />

@@ -32,11 +32,14 @@ export function useMessages(conversationId: string | null) {
         // Mark as read
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
-          await supabase
-            .from("messages")
-            .update({ read: true })
-            .eq("conversation_id", conversationId)
-            .neq("sender_id", user.id);
+          const { data: dbUser } = await supabase.from('users').select('id').eq('clerk_id', user.id).single();
+          if (dbUser) {
+            await supabase
+              .from("messages")
+              .update({ read: true })
+              .eq("conversation_id", conversationId)
+              .neq("sender_id", dbUser.id);
+          }
         }
       } catch (err) {
         console.error("Error loading messages:", err);
@@ -63,12 +66,15 @@ export function useMessages(conversationId: string | null) {
           setMessages((prev) => [...prev, payload.new]);
           
           // Mark as read if user is in this conversation
-          supabase.auth.getUser().then(({ data: { user } }) => {
-            if (user && payload.new.sender_id !== user.id) {
-              supabase
-                .from("messages")
-                .update({ read: true })
-                .eq("id", payload.new.id);
+          supabase.auth.getUser().then(async ({ data: { user } }) => {
+            if (user) {
+              const { data: dbUser } = await supabase.from('users').select('id').eq('clerk_id', user.id).single();
+              if (dbUser && payload.new.sender_id !== dbUser.id) {
+                supabase
+                  .from("messages")
+                  .update({ read: true })
+                  .eq("id", payload.new.id);
+              }
             }
           });
         }
@@ -87,9 +93,12 @@ export function useMessages(conversationId: string | null) {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("No user session");
 
+      const { data: dbUser } = await supabase.from('users').select('id').eq('clerk_id', user.id).single();
+      if (!dbUser) throw new Error("DB user not found");
+
       const newMessage = {
         conversation_id: conversationId,
-        sender_id: user.id,
+        sender_id: dbUser.id,
         content,
         type,
         read: false,

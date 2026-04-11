@@ -21,9 +21,10 @@ export default function MessagesPage() {
       const { data: userData } = await supabase
         .from("users")
         .select("*")
-        .eq("id", user.id)
+        .eq("clerk_id", user.id)
         .single();
       setCurrentUser(userData);
+      const dbUserId = userData?.id;
 
       // Fetch conversations
       const { data: convs } = await supabase
@@ -38,7 +39,7 @@ export default function MessagesPage() {
 
       if (convs) {
         const transformed = await Promise.all(convs.map(async (conv: any) => {
-          const otherMember = conv.conversation_members.find((m: any) => m.user_id !== user.id);
+          const otherMember = conv.conversation_members.find((m: any) => m.user_id !== dbUserId);
           const otherUserId = otherMember?.user_id;
 
           const { data: otherUser } = await supabase
@@ -58,7 +59,7 @@ export default function MessagesPage() {
           )[0];
 
           const unreadCount = conv.messages.filter((m: any) => 
-            m.sender_id !== user.id && !m.read
+            m.sender_id !== dbUserId && !m.read
           ).length;
 
           return {
