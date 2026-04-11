@@ -46,7 +46,8 @@ const badgeConfig = {
 };
 
 export default function BadgeIcon({ type, showText = false, className }: BadgeIconProps) {
-  const config = badgeConfig[type];
+  const config = (badgeConfig as any)[type];
+  if (!config) return null;
   const Icon = config.icon;
 
   if (showText) {
