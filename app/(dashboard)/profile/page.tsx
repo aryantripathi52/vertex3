@@ -34,30 +34,38 @@ export default function MyProfilePage() {
         if (!user) return;
 
         // Fetch User Data
-        const { data: userData } = await supabase
+        const { data: userData, error: userError } = await supabase
           .from("users")
           .select("*")
-          .eq("id", user.id)
+          .eq("clerk_id", user.id)
           .single();
+
+        if (!userData) {
+          console.error("User not found in Supabase:", userError);
+          setLoading(false);
+          return;
+        }
+
+        const supabaseUserId = userData.id;
 
         // Fetch Badges
         const { data: badgesData } = await supabase
           .from("badges")
           .select("*")
-          .eq("user_id", user.id);
+          .eq("user_id", supabaseUserId);
 
         // Fetch Extended Profile
         const { data: extendedData } = await supabase
           .from("profiles_extended")
           .select("*")
-          .eq("user_id", user.id)
+          .eq("user_id", supabaseUserId)
           .single();
 
         // Fetch Connections Count
         const { count: connCount } = await supabase
           .from("connections")
           .select("*", { count: 'exact', head: true })
-          .or(`requester_id.eq.${user.id},receiver_id.eq.${user.id}`)
+          .or(`requester_id.eq.${supabaseUserId},receiver_id.eq.${supabaseUserId}`)
           .eq("status", "accepted");
 
         setProfile(userData);
