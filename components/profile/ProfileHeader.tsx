@@ -55,9 +55,11 @@ export default function ProfileHeader({
 
               {/* Badges Overlay */}
               <div className="absolute -bottom-1 -right-1 flex -space-x-2">
-                {badges.slice(0, 3).map((badge, idx) => (
+                {(badges || []).slice(0, 3).map((badge, idx) => (
                   <div key={idx} className="bg-[#13131a] rounded-full p-0.5">
-                    <BadgeIcon type={badge.badge_type as BadgeType} size="sm" />
+                    {badge?.badge_type && (
+                      <BadgeIcon type={badge.badge_type as BadgeType} />
+                    )}
                   </div>
                 ))}
               </div>
