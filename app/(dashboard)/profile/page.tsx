@@ -205,14 +205,123 @@ export default function MyProfilePage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-12 px-4">
-      <ProfileHeader
-        profile={profile}
-        badges={badges}
-        editing={editing}
-        form={form}
-        setForm={setForm}
-        onAvatarUpload={handleAvatarUpload}
-      />
+      {/* Status message */}
+      {message && (
+        <div className={cn(
+          "fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl shadow-2xl border text-sm font-semibold transition-all",
+          message.type === 'success'
+            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+            : "bg-red-500/10 border-red-500/30 text-red-400"
+        )}>
+          {message.type === 'success' ? <Save className="h-4 w-4" /> : <X className="h-4 w-4" />}
+          {message.text}
+        </div>
+      )}
+
+      {/* Profile Header with Edit/Save/Cancel overlay */}
+      <div className="relative">
+        <ProfileHeader
+          profile={profile}
+          badges={badges}
+          editing={editing}
+          form={form}
+          setForm={setForm}
+          onAvatarUpload={handleAvatarUpload}
+          isOwnProfile={true}
+        />
+
+        {/* Action buttons — top right corner */}
+        <div className="absolute top-4 right-4 flex gap-2">
+          {editing ? (
+            <>
+              <Button
+                onClick={() => { setEditing(false); setForm({ ...profile }); }}
+                variant="ghost"
+                className="bg-white/5 border border-white/10 text-[#6b7280] hover:bg-white/10 rounded-xl h-9 px-4 text-sm"
+              >
+                <X className="h-4 w-4 mr-1.5" /> Cancel
+              </Button>
+              <Button
+                onClick={handleSave}
+                disabled={saving}
+                className="bg-[#6c47ff] hover:bg-[#5535ee] text-white rounded-xl h-9 px-4 text-sm shadow-lg shadow-[#6c47ff]/20"
+              >
+                {saving ? <Loader2 className="h-4 w-4 mr-1.5 animate-spin" /> : <Save className="h-4 w-4 mr-1.5" />}
+                {saving ? "Saving..." : "Save"}
+              </Button>
+            </>
+          ) : (
+            <Button
+              onClick={() => setEditing(true)}
+              className="bg-white/5 border border-white/10 text-[#f0f0ff] hover:bg-white/10 rounded-xl h-9 px-4 text-sm"
+            >
+              <Edit3 className="h-4 w-4 mr-1.5" /> Edit Profile
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Stats + Skills + Socials grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          {/* Stats row */}
+          <Card className="bg-[#13131a] border-white/10 rounded-2xl p-6">
+            <StatsRow
+              connectionsCount={connectionsCount}
+              hackathonsCount={0}
+              winsCount={0}
+              referralCount={0}
+            />
+          </Card>
+
+          {/* Skills & Roles */}
+          <Card className="bg-[#13131a] border-white/10 rounded-2xl p-6">
+            <SkillsSection
+              skills={form.skills}
+              roles={form.roles}
+              editing={editing}
+              onToggleSkill={toggleSkill}
+              onToggleRole={toggleRole}
+            />
+          </Card>
+        </div>
+
+        {/* Right sidebar — social links (always visible, editable when editing) */}
+        <div className="space-y-4">
+          <Card className="bg-[#13131a] border-white/10 rounded-2xl p-6 space-y-4">
+            <h3 className="text-sm font-semibold text-[#f0f0ff]">Social Links</h3>
+            {([
+              { key: 'github_url', label: 'GitHub URL' },
+              { key: 'linkedin_url', label: 'LinkedIn URL' },
+              { key: 'portfolio_url', label: 'Portfolio URL' },
+              { key: 'twitter_url', label: 'Twitter URL' },
+            ] as { key: string; label: string }[]).map(({ key, label }) => (
+              <div key={key}>
+                <label className="text-xs text-[#6b7280] mb-1 block">{label}</label>
+                {editing ? (
+                  <input
+                    value={form[key] || ''}
+                    onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                    placeholder="https://..."
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-[#f0f0ff] focus:ring-2 focus:ring-[#6c47ff] outline-none"
+                  />
+                ) : form[key] ? (
+                  <a
+                    href={form[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-[#6c47ff] hover:underline truncate block"
+                  >
+                    {form[key]}
+                  </a>
+                ) : (
+                  <p className="text-xs text-[#6b7280] italic">Not set</p>
+                )}
+              </div>
+            ))}
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }

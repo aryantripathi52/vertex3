@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export function useNotifications() {
@@ -8,46 +8,58 @@ export function useNotifications() {
   const [notifications, setNotifications] = useState<any[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [dbUserId, setDbUserId] = useState<string | null>(null);
 
   useEffect(() => {
     async function init() {
+      // Get auth user then look up DB row to get the correct DB id
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
 
-      // Fetch initial notifications
-      const { data, error } = await supabase
+      const { data: dbUser } = await supabase
+        .from("users")
+        .select("id")
+        .eq("clerk_id", user.id)
+        .single();
+
+      if (!dbUser) {
+        setLoading(false);
+        return;
+      }
+
+      const uid = dbUser.id;
+      setDbUserId(uid);
+
+      // Fetch initial notifications for this DB user
+      const { data } = await supabase
         .from("notifications")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("user_id", uid)
         .order("created_at", { ascending: false });
 
       if (data) {
         setNotifications(data);
-        setUnreadCount(data.filter(n => !n.is_read).length);
+        setUnreadCount(data.filter((n) => !n.is_read).length);
       }
       setLoading(false);
-    }
 
-    init();
-
-    // Subscribe to real-time updates
-    const subscribe = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
+      // Real-time: new notifications
       const channel = supabase
-        .channel(`notifications:${user.id}`)
+        .channel(`notifications:${uid}`)
         .on(
           "postgres_changes",
           {
             event: "INSERT",
             schema: "public",
             table: "notifications",
-            filter: `user_id=eq.${user.id}`,
+            filter: `user_id=eq.${uid}`,
           },
           (payload) => {
-            setNotifications(prev => [payload.new, ...prev]);
-            setUnreadCount(prev => prev + 1);
+            setNotifications((prev) => [payload.new, ...prev]);
+            setUnreadCount((prev) => prev + 1);
           }
         )
         .on(
@@ -56,15 +68,17 @@ export function useNotifications() {
             event: "UPDATE",
             schema: "public",
             table: "notifications",
-            filter: `user_id=eq.${user.id}`,
+            filter: `user_id=eq.${uid}`,
           },
           (payload) => {
-            setNotifications(prev => 
-              prev.map(n => n.id === payload.new.id ? payload.new : n)
+            setNotifications((prev) =>
+              prev.map((n) => (n.id === payload.new.id ? payload.new : n))
             );
-            // Recalculate unread count
-            setUnreadCount(prev => {
-              if (payload.old.is_read === false && payload.new.is_read === true) {
+            setUnreadCount((prev) => {
+              if (
+                payload.old.is_read === false &&
+                payload.new.is_read === true
+              ) {
                 return Math.max(0, prev - 1);
               }
               return prev;
@@ -73,43 +87,57 @@ export function useNotifications() {
         )
         .subscribe();
 
-      return channel;
-    };
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    }
 
-    const channelPromise = subscribe();
-
+    const cleanup = init();
     return () => {
-      channelPromise.then(channel => {
-        if (channel) supabase.removeChannel(channel);
-      });
+      cleanup.then((fn) => fn && fn());
     };
   }, [supabase]);
 
-  const markAllAsRead = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
+  const markAllAsRead = useCallback(async () => {
+    if (!dbUserId) return;
     await supabase
       .from("notifications")
       .update({ is_read: true })
-      .eq("user_id", user.id)
+      .eq("user_id", dbUserId)
       .eq("is_read", false);
 
-    setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
+    setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
     setUnreadCount(0);
-  };
+  }, [supabase, dbUserId]);
 
-  const markAsRead = async (id: string) => {
+  const markAsRead = useCallback(async (id: string) => {
     await supabase
       .from("notifications")
       .update({ is_read: true })
       .eq("id", id);
 
-    setNotifications(prev => 
-      prev.map(n => n.id === id ? { ...n, is_read: true } : n)
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
     );
-    setUnreadCount(prev => Math.max(0, prev - 1));
-  };
+    setUnreadCount((prev) => Math.max(0, prev - 1));
+  }, [supabase]);
 
-  return { notifications, unreadCount, loading, markAllAsRead, markAsRead };
+  /** Remove a notification from local state (after accept/reject) */
+  const removeNotification = useCallback((id: string) => {
+    setNotifications((prev) => {
+      const n = prev.find((x) => x.id === id);
+      if (n && !n.is_read) setUnreadCount((c) => Math.max(0, c - 1));
+      return prev.filter((x) => x.id !== id);
+    });
+  }, []);
+
+  return {
+    notifications,
+    unreadCount,
+    loading,
+    markAllAsRead,
+    markAsRead,
+    removeNotification,
+    dbUserId,
+  };
 }

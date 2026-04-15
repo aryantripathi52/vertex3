@@ -15,66 +15,96 @@ export default function MessagesPage() {
 
   useEffect(() => {
     async function init() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          setLoading(false);
+          return;
+        }
 
-      const { data: userData } = await supabase
-        .from("users")
-        .select("*")
-        .eq("clerk_id", user.id)
-        .single();
-      setCurrentUser(userData);
-      const dbUserId = userData?.id;
+        const { data: userData } = await supabase
+          .from("users")
+          .select("*")
+          .eq("clerk_id", user.id)
+          .single();
 
-      // Fetch conversations
-      const { data: convs } = await supabase
-        .from("conversations")
-        .select(`
-          id,
-          created_at,
-          conversation_members (user_id),
-          messages (id, content, created_at, sender_id, read, type)
-        `)
-        .order('created_at', { ascending: false });
+        if (!userData) {
+          setLoading(false);
+          return;
+        }
 
-      if (convs) {
-        const transformed = await Promise.all(convs.map(async (conv: any) => {
-          const otherMember = conv.conversation_members.find((m: any) => m.user_id !== dbUserId);
-          const otherUserId = otherMember?.user_id;
+        setCurrentUser(userData);
+        const dbUserId = userData?.id;
 
-          const { data: otherUser } = await supabase
-            .from("users")
-            .select("id, full_name, username, avatar_url, subscription_tier")
-            .eq("id", otherUserId)
-            .single();
+        // Fetch conversations where this user is a member
+        const { data: memberRows } = await supabase
+          .from("conversation_members")
+          .select("conversation_id")
+          .eq("user_id", dbUserId);
 
-          const { data: badges } = await supabase
-            .from("badges")
-            .select("badge_type")
-            .eq("user_id", otherUserId)
-            .limit(1);
+        if (!memberRows || memberRows.length === 0) {
+          setConversations([]);
+          setLoading(false);
+          return;
+        }
 
-          const lastMessage = conv.messages.sort((a: any, b: any) => 
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          )[0];
+        const convIds = memberRows.map((r: any) => r.conversation_id);
 
-          const unreadCount = conv.messages.filter((m: any) => 
-            m.sender_id !== dbUserId && !m.read
-          ).length;
+        const { data: convs } = await supabase
+          .from("conversations")
+          .select(`
+            id,
+            created_at,
+            conversation_members (user_id),
+            messages (id, content, created_at, sender_id, read, type)
+          `)
+          .in("id", convIds)
+          .order('created_at', { ascending: false });
 
-          return {
-            id: conv.id,
-            otherUser: {
-              ...otherUser,
-              badge: badges?.[0]?.badge_type,
-            },
-            lastMessage,
-            unreadCount
-          };
-        }));
-        setConversations(transformed);
+        if (convs && convs.length > 0) {
+          const transformed = await Promise.all(convs.map(async (conv: any) => {
+            const otherMember = conv.conversation_members.find((m: any) => m.user_id !== dbUserId);
+            const otherUserId = otherMember?.user_id;
+
+            const { data: otherUser } = await supabase
+              .from("users")
+              .select("id, full_name, username, avatar_url, subscription_tier")
+              .eq("id", otherUserId)
+              .single();
+
+            const { data: badges } = await supabase
+              .from("badges")
+              .select("badge_type")
+              .eq("user_id", otherUserId)
+              .limit(1);
+
+            const lastMessage = (conv.messages || []).sort((a: any, b: any) =>
+              new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+            )[0];
+
+            const unreadCount = (conv.messages || []).filter((m: any) =>
+              m.sender_id !== dbUserId && !m.read
+            ).length;
+
+            return {
+              id: conv.id,
+              otherUser: {
+                ...otherUser,
+                badge: badges?.[0]?.badge_type,
+              },
+              lastMessage,
+              unreadCount
+            };
+          }));
+          setConversations(transformed);
+        } else {
+          setConversations([]);
+        }
+      } catch (err) {
+        console.error("Messages init error:", err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     init();
   }, [supabase]);

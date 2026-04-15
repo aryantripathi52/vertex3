@@ -24,7 +24,7 @@ export default function PublicProfilePage() {
   const [profile, setProfile] = useState<any>(null);
   const [badges, setBadges] = useState<any[]>([]);
   const [extended, setExtended] = useState<any>({});
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);        // DB user row
   const [connectionStatus, setConnectionStatus] = useState<'none' | 'pending' | 'accepted'>('none');
   const [connectionsCount, setConnectionsCount] = useState(0);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -33,8 +33,18 @@ export default function PublicProfilePage() {
   useEffect(() => {
     async function loadProfile() {
       try {
-        const { data: { user: currUser } } = await supabase.auth.getUser();
-        setCurrentUser(currUser);
+        // Get auth user first, then fetch DB row
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        let dbCurrentUser: any = null;
+        if (authUser) {
+          const { data: dbUser } = await supabase
+            .from("users")
+            .select("*")
+            .eq("clerk_id", authUser.id)
+            .single();
+          dbCurrentUser = dbUser || null;
+          setCurrentUser(dbCurrentUser);
+        }
 
         // Fetch target user by username
         const { data: userData, error: userError } = await supabase
@@ -49,7 +59,7 @@ export default function PublicProfilePage() {
         }
 
         // If viewing own profile, redirect
-        if (currUser && userData.id === currUser.id) {
+        if (dbCurrentUser && userData.id === dbCurrentUser.id) {
           router.push("/profile");
           return;
         }
@@ -71,7 +81,7 @@ export default function PublicProfilePage() {
           .single();
         setExtended(extendedData || {});
 
-        // Fetch Connections Count
+        // Fetch real Connections Count (accepted only)
         const { count: connCount } = await supabase
           .from("connections")
           .select("*", { count: 'exact', head: true })
@@ -79,13 +89,16 @@ export default function PublicProfilePage() {
           .eq("status", "accepted");
         setConnectionsCount(connCount || 0);
 
-        // Check connection status with current user
-        if (currUser) {
+        // Check connection status between current DB user and target user
+        if (dbCurrentUser) {
           const { data: connData } = await supabase
             .from("connections")
-            .select("status, requester_id")
-            .or(`and(requester_id.eq.${currUser.id},receiver_id.eq.${userData.id}),and(requester_id.eq.${userData.id},receiver_id.eq.${currUser.id})`)
-            .single();
+            .select("status")
+            .or(
+              `and(requester_id.eq.${dbCurrentUser.id},receiver_id.eq.${userData.id}),` +
+              `and(requester_id.eq.${userData.id},receiver_id.eq.${dbCurrentUser.id})`
+            )
+            .maybeSingle();
 
           if (connData) {
             setConnectionStatus(connData.status as any);
@@ -103,20 +116,34 @@ export default function PublicProfilePage() {
 
   const handleConnect = async () => {
     if (!currentUser || !profile || connectionStatus !== 'none') return;
-    
+
     setIsConnecting(true);
     try {
-      const { error } = await supabase
+      // 1. Insert the connection row
+      const { data: connRow, error } = await supabase
         .from("connections")
         .insert({
-          requester_id: currentUser.id,
-          receiver_id: profile.id,
+          requester_id: currentUser.id,   // DB users.id
+          receiver_id: profile.id,         // DB users.id
           status: 'pending'
-        });
+        })
+        .select("id")
+        .single();
 
       if (error) throw error;
+
+      // 2. Insert a notification for the receiver so their bell lights up
+      await supabase.from("notifications").insert({
+        user_id: profile.id,                        // receiver's DB users.id
+        type: "connection_request",
+        title: `${currentUser.full_name || currentUser.username} wants to connect`,
+        body: `${currentUser.full_name || currentUser.username} sent you a connection request on Vertex3.`,
+        reference_id: connRow?.id,                  // connection row id for Accept/Reject
+        is_read: false,
+      });
+
       setConnectionStatus('pending');
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error connecting:", error);
     } finally {
       setIsConnecting(false);
