@@ -208,22 +208,32 @@ export default function UpgradePage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
         {plans.map((plan) => (
-          <Card 
+          <div
             key={plan.id}
             className={cn(
-              "bg-[#13131a] border-2 relative overflow-hidden transition-all duration-500 hover:-translate-y-2",
+              "flex flex-col",
+              plan.badge && "md:-mt-4"
+            )}
+          >
+            {/* Most Popular badge ABOVE the card */}
+            {plan.badge && (
+              <div className="flex justify-center mb-3">
+                <span className="inline-flex items-center gap-1.5 bg-[#6c47ff] text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-lg shadow-[#6c47ff]/40 uppercase tracking-widest">
+                  <Sparkles className="h-3 w-3" />
+                  {plan.badge}
+                </span>
+              </div>
+            )}
+          <Card 
+            className={cn(
+              "bg-[#13131a] border-2 relative overflow-hidden transition-all duration-500 hover:-translate-y-2 flex-1",
               plan.color,
               plan.glow,
               currentTier === plan.id && "ring-2 ring-offset-4 ring-offset-[#0a0a0f] ring-[#6c47ff]"
             )}
           >
-            {plan.badge && (
-              <div className="absolute top-4 right-[-35px] rotate-45 bg-[#6c47ff] text-white text-[10px] font-bold py-1 w-32 text-center shadow-lg">
-                {plan.badge}
-              </div>
-            )}
             
             <CardHeader className="p-8 pb-4">
               <div className="h-12 w-12 rounded-2xl bg-white/5 flex items-center justify-center mb-4 border border-white/5">
@@ -267,8 +277,10 @@ export default function UpgradePage() {
               </Button>
             </CardFooter>
           </Card>
+          </div>
         ))}
       </div>
+
 
       {/* Comparison Table */}
       <div className="pt-12 space-y-8">

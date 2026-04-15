@@ -176,7 +176,7 @@ export default function LandingPage() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Choose Your Plan</h2>
           <p className="text-[#6b7280]">Scale your building potential.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-start">
           {/* Free */}
           <Card className="bg-[#13131a] border-white/10 flex flex-col">
             <CardHeader>
@@ -196,28 +196,33 @@ export default function LandingPage() {
             </CardFooter>
           </Card>
 
-          {/* Pro */}
-          <Card className="bg-[#13131a] border-[#6c47ff] shadow-[0_0_30px_-10px_#6c47ff] relative flex flex-col scale-105 z-10">
-            <div className="absolute top-0 right-0 transform translate-y-[-50%] px-3 py-1 bg-[#6c47ff] text-white text-[10px] font-bold uppercase tracking-widest rounded-full mr-6">
-              Most Popular
+          {/* Pro — most popular wrapper */}
+          <div className="flex flex-col md:-mt-4">
+            {/* Badge sits ABOVE the card, outside overflow-hidden boundary */}
+            <div className="flex justify-center mb-3">
+              <span className="inline-flex items-center gap-1.5 bg-[#6c47ff] text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-lg shadow-[#6c47ff]/40 uppercase tracking-widest">
+                ✦ Most Popular
+              </span>
             </div>
-            <CardHeader>
-              <CardTitle className="text-[#f0f0ff]">Pro</CardTitle>
-              <CardDescription className="text-[#6b7280]">Power user tools</CardDescription>
-              <div className="mt-4 text-3xl font-bold text-[#f0f0ff]">₹99<span className="text-sm font-normal text-[#6b7280]">/mo</span></div>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <ul className="space-y-3 text-sm text-[#f0f0ff]">
-                <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Read receipts</li>
-                <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Image DMs</li>
-                <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Spotlight badge</li>
-                <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Profile boost</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full bg-[#6c47ff] hover:bg-[#6c47ff]/90 text-white">Upgrade to Pro</Button>
-            </CardFooter>
-          </Card>
+            <Card className="bg-[#13131a] border-2 border-[#6c47ff] shadow-[0_0_40px_-10px_rgba(108,71,255,0.5)] flex flex-col">
+              <CardHeader>
+                <CardTitle className="text-[#f0f0ff]">Pro</CardTitle>
+                <CardDescription className="text-[#6b7280]">Power user tools</CardDescription>
+                <div className="mt-4 text-3xl font-bold text-[#f0f0ff]">₹99<span className="text-sm font-normal text-[#6b7280]">/mo</span></div>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ul className="space-y-3 text-sm text-[#f0f0ff]">
+                  <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Read receipts</li>
+                  <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Image DMs</li>
+                  <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Spotlight badge</li>
+                  <li className="flex items-center gap-2"><Zap className="h-4 w-4 text-[#6c47ff]" /> Profile boost</li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full bg-[#6c47ff] hover:bg-[#5535ee] text-white shadow-lg shadow-[#6c47ff]/30">Upgrade to Pro</Button>
+              </CardFooter>
+            </Card>
+          </div>
 
           {/* Elite */}
           <Card className="bg-[#13131a] border-white/10 flex flex-col">
@@ -239,6 +244,7 @@ export default function LandingPage() {
             </CardFooter>
           </Card>
         </div>
+
       </section>
 
       {/* 7. FOOTER */}

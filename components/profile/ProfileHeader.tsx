@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Camera, Github, GraduationCap, MapPin, ExternalLink, Mail } from "lucide-react";
+import { Camera, Code2, GraduationCap, MapPin, ExternalLink, Mail } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -142,7 +142,7 @@ export default function ProfileHeader({
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-[#6c47ff] hover:text-[#5535ee] transition-colors"
             >
-              <Github className="h-4 w-4" />
+              <Code2 className="h-4 w-4" />
               <span className="text-sm font-medium">GitHub</span>
               <ExternalLink className="h-3 w-3" />
             </a>
